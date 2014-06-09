@@ -168,7 +168,9 @@ class FastImage
       rescue Addressable::URI::InvalidURIError
         fetch_using_open_uri
       else
-        if @parsed_uri.scheme == "http" || @parsed_uri.scheme == "https"
+        if @parsed_uri.scheme == "data"
+          raise FastImageException if options[:raise_on_failure]
+        elsif @parsed_uri.scheme == "http" || @parsed_uri.scheme == "https"
           fetch_using_http
         else
           fetch_using_open_uri
